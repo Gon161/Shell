@@ -58,9 +58,8 @@ namespace Shell.Servicio
             }
             catch (Exception ex)
             {
-                var iniciador = new srv_Log();
-                iniciador.Log($"CryptoTools.EncryptAes: {ex}");
-                throw;
+               
+                return string.Empty;
             }
         }
 
@@ -98,9 +97,8 @@ namespace Shell.Servicio
             }
             catch (Exception ex)
             {
-                var iniciador = new srv_Log();
-                iniciador.Log($"srv_CryptoTools.DecryptAes: {ex}");
-                throw;
+
+                return string.Empty;
             }
         }
     }

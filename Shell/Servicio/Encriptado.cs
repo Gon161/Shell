@@ -10,7 +10,7 @@ namespace Shell.Servicio
 {
     internal class Encriptado
     {
-        private static readonly string AES_PASSWORD = "/CFDI_Mbdb+Admin_201";
+        private static readonly string AES_PASSWORD = "*Gon161AE";
 
         private static byte[] GetAesKey()
         {

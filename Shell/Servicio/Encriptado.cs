@@ -58,7 +58,7 @@ namespace Shell.Servicio
             }
             catch (Exception ex)
             {
-               
+
                 return string.Empty;
             }
         }

@@ -1,0 +1,7 @@
+C:\Users\Gon\source\repos\Shell\Shell\bin\Debug\Shell.exe.config
+C:\Users\Gon\source\repos\Shell\Shell\bin\Debug\Shell.exe
+C:\Users\Gon\source\repos\Shell\Shell\bin\Debug\Shell.pdb
+C:\Users\Gon\source\repos\Shell\Shell\obj\Debug\Shell.csproj.AssemblyReference.cache
+C:\Users\Gon\source\repos\Shell\Shell\obj\Debug\Shell.csproj.CoreCompileInputs.cache
+C:\Users\Gon\source\repos\Shell\Shell\obj\Debug\Shell.exe
+C:\Users\Gon\source\repos\Shell\Shell\obj\Debug\Shell.pdb

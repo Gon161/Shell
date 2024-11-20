@@ -1,18 +1,5 @@
-[2024-11-20T01:20:46] - Iniciando MyBigDataService Consolidaciones, 1.0a
-[2024-11-20T01:21:35] - Iniciando MyBigDataService Consolidaciones, 1.0a
-[2024-11-20T01:23:03] - Iniciando MyBigDataService Consolidaciones, 1.0a
-[2024-11-20T01:23:03] - srv_SocketServer.StartServer: La dirección solicitada no es válida en este contexto |    en System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+[2024-11-20T01:34:02] - Iniciando shell, 1.0a
+[2024-11-20T01:34:02] - srv_SocketServer.StartServer: Solo se permite un uso de cada dirección de socket (protocolo/dirección de red/puerto) |    en System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
    en System.Net.Sockets.Socket.Bind(EndPoint localEP)
    en Shell.Servicio.SocketServer.StartServer(Sockets oModulo) en C:\Users\Gon\source\repos\Shell\Shell\Servicio\SocketServer.cs:línea 34
-[2024-11-20T01:23:03] - srv_SocketServer.StartServer: La dirección solicitada no es válida en este contexto |    en System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
-   en System.Net.Sockets.Socket.Bind(EndPoint localEP)
-   en Shell.Servicio.SocketServer.StartServer(Sockets oModulo) en C:\Users\Gon\source\repos\Shell\Shell\Servicio\SocketServer.cs:línea 34
-[2024-11-20T01:23:20] - Iniciando MyBigDataService Consolidaciones, 1.0a
-[2024-11-20T01:23:42] - Iniciando MyBigDataService Consolidaciones, 1.0a
-[2024-11-20T01:23:46] - srv_SocketServer.StartServer: Solo se permite un uso de cada dirección de socket (protocolo/dirección de red/puerto) |    en System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
-   en System.Net.Sockets.Socket.Bind(EndPoint localEP)
-   en Shell.Servicio.SocketServer.StartServer(Sockets oModulo) en C:\Users\Gon\source\repos\Shell\Shell\Servicio\SocketServer.cs:línea 34
-[2024-11-20T01:24:36] - Iniciando shell, 1.0a
-[2024-11-20T01:24:36] - srv_SocketServer.StartServer: Solo se permite un uso de cada dirección de socket (protocolo/dirección de red/puerto) |    en System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
-   en System.Net.Sockets.Socket.Bind(EndPoint localEP)
-   en Shell.Servicio.SocketServer.StartServer(Sockets oModulo) en C:\Users\Gon\source\repos\Shell\Shell\Servicio\SocketServer.cs:línea 34
+[2024-11-20T01:34:30] - Iniciando shell, 1.0a

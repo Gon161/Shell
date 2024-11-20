@@ -19,7 +19,7 @@ namespace Shell.Servicio
             [Description("Port 8380, Módulo Calculadora")]
             Calculadora = 8381,
             [Description("Port 8380, Módulo Validacion")]
-            Expresiones = 8381,
+            Expresiones = 8382,
         }
     }
 }

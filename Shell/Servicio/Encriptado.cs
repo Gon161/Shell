@@ -8,98 +8,133 @@ using System.Threading.Tasks;
 
 namespace Shell.Servicio
 {
-    internal class Encriptado
+    public static class Encriptado
     {
-        private static readonly string AES_PASSWORD = "*Gon161AE";
+        private static Aes oAES = null;
+
+        private const string AES_PASSWORD = "/Gon161*IS";
+
+        private static ASCIIEncoding oAscii = null;
+        private static UTF8Encoding oUtf8 = null;
+       
+        private static Aes ALGO_AES
+        {
+            get
+            {
+                if (oAES == null)
+                {
+                    oAES = Aes.Create("AES");
+                    oAES.Mode = CipherMode.CBC;
+                    oAES.KeySize = 256;
+                    oAES.Padding = PaddingMode.PKCS7;
+                    oAES.Key = GetAesKey();
+                   
+                }
+
+                return oAES;
+            }
+        }
+
+
+        private static ASCIIEncoding ASCII
+        {
+            get
+            {
+                if (oAscii == null)
+                    oAscii = new ASCIIEncoding();
+
+                return oAscii;
+            }
+        }
+
+
+        private static UTF8Encoding UTF8
+        {
+            get
+            {
+                if (oUtf8 == null)
+                    oUtf8 = new UTF8Encoding(false);
+
+                return oUtf8;
+            }
+        }
+
 
         private static byte[] GetAesKey()
         {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                return sha256.ComputeHash(Encoding.ASCII.GetBytes(AES_PASSWORD));
-            }
+            byte[] yPassw = ASCII.GetBytes(AES_PASSWORD);
+            using (SHA256 ALGO_SHA256 = SHA256.Create("SHA256"))
+                return ALGO_SHA256.ComputeHash(yPassw);
         }
 
-        public static string EncryptAes(string message)
+        public static string Encrypt_AES(string sMensaje)
         {
+            byte[] yEncriptado = null;
+            byte[] yIV = new byte[16];
+
             try
             {
-                byte[] key = GetAesKey();
-                byte[] iv = new byte[16];
-                using (Aes aes = Aes.Create())
-                {
-                    aes.Key = key;
-                    aes.IV = iv;
-                    aes.Mode = CipherMode.CBC;
+                ALGO_AES.GenerateIV();
+                yIV = ALGO_AES.IV;
 
-                    using (ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV))
-                    using (MemoryStream ms = new MemoryStream())
+                ICryptoTransform oEncryp = ALGO_AES.CreateEncryptor(ALGO_AES.Key, yIV);
+
+                using (MemoryStream oMemoStr = new MemoryStream())
+                {
+                    using (CryptoStream oCryptoStr = new CryptoStream(oMemoStr, oEncryp, CryptoStreamMode.Write))
                     {
-                        ms.Write(aes.IV, 0, aes.IV.Length);  // Escribir IV al principio del flujo
-                        using (CryptoStream cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+                        using (StreamWriter oWriter = new StreamWriter(oCryptoStr, UTF8))
                         {
-                            byte[] messageBytes = Encoding.UTF8.GetBytes(message);
-
-                            // Aplicar el relleno PKCS7 manualmente
-                            int paddingLength = aes.BlockSize / 8 - messageBytes.Length % (aes.BlockSize / 8);
-                            byte[] paddedMessage = new byte[messageBytes.Length + paddingLength];
-                            Array.Copy(messageBytes, paddedMessage, messageBytes.Length);
-                            for (int i = messageBytes.Length; i < paddedMessage.Length; i++)
-                            {
-                                paddedMessage[i] = (byte)paddingLength;
-                            }
-
-                            cs.Write(paddedMessage, 0, paddedMessage.Length);
-                            cs.FlushFinalBlock();
+                            oMemoStr.Write(yIV, 0, yIV.Length);
+                            oWriter.Write(sMensaje);
                         }
-                        return Convert.ToBase64String(ms.ToArray());
+
+                        yEncriptado = oMemoStr.ToArray();
                     }
                 }
+
+                return Convert.ToBase64String(yEncriptado);
             }
             catch (Exception ex)
             {
-
-                return string.Empty;
+                Log.Instancia.LogWrite(string.Format("srv_CryptoTools.Encrypt_AES: {0} | {1} ", ex.Message, ex.StackTrace));
+                throw;
             }
         }
 
-        public static string DecryptAes(string encryptedMessage)
+
+        public static string Desencrypt_AES(string sMsjEncrypt)
         {
+            string sMsjDecrypt = string.Empty;
+            byte[] yDecode64 = null;
+
             try
             {
-                byte[] encryptedBytes = Convert.FromBase64String(encryptedMessage);
-                byte[] key = GetAesKey();
-                byte[] iv = new byte[16];
-                Array.Copy(encryptedBytes, iv, iv.Length);
+                yDecode64 = Convert.FromBase64String(sMsjEncrypt);
 
-                using (Aes aes = Aes.Create())
+                using (MemoryStream oMemoStr = new MemoryStream(yDecode64))
                 {
-                    aes.Key = key;
-                    aes.IV = iv;
-                    aes.Mode = CipherMode.CBC;
+                   
+                    byte[] yIV = new byte[16];
+                    oMemoStr.Read(yIV, 0, 16);
 
-                    using (ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
-                    using (MemoryStream ms = new MemoryStream(encryptedBytes, iv.Length, encryptedBytes.Length - iv.Length))
-                    using (CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
-                    using (MemoryStream decryptedStream = new MemoryStream())
+                    ICryptoTransform oDecrypt = ALGO_AES.CreateDecryptor(ALGO_AES.Key, yIV);
+
+                    using (CryptoStream oCryptoStr = new CryptoStream(oMemoStr, oDecrypt, CryptoStreamMode.Read))
                     {
-                        cs.CopyTo(decryptedStream);
-                        byte[] decryptedData = decryptedStream.ToArray();
-
-                        // Eliminar el relleno PKCS7
-                        int paddingLength = decryptedData[decryptedData.Length - 1];
-                        byte[] result = new byte[decryptedData.Length - paddingLength];
-                        Array.Copy(decryptedData, 0, result, 0, result.Length);
-
-                        return Encoding.UTF8.GetString(result);
+                        using (StreamReader oReader = new StreamReader(oCryptoStr, UTF8))
+                            sMsjDecrypt = oReader.ReadToEnd();
                     }
                 }
+
+                return sMsjDecrypt;
             }
             catch (Exception ex)
             {
-
-                return string.Empty;
+                Log.Instancia.LogWrite(string.Format("srv_CryptoTools.Desencrypt_AES: {0} | {1} ", ex.Message, ex.StackTrace));
+                throw;
             }
         }
+
     }
 }

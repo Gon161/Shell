@@ -31,7 +31,7 @@ namespace Shell.Servicio
             }
             catch (Exception ex)
             {
-                Log.Instancia.LogWrite(string.Format("srv_SocketManager.StartTaskServer: {0} | {1}", ex.Message, ex.StackTrace));
+                Log.Instancia.LogWrite(string.Format("SocketManager.StartTaskServer: {0} | {1}", ex.Message, ex.StackTrace));
             }
 
         }

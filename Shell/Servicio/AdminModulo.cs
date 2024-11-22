@@ -5,7 +5,7 @@ using System.Net.Sockets; // Permite trabajar con comunicación de red utilizand
 using System.Text; // Facilita la manipulación de cadenas de texto.
 using System.Threading.Tasks; // Proporciona funcionalidades para trabajar con tareas asincrónicas.
 using static Shell.Servicio.Propiedades; // Importa miembros estáticos de la clase Propiedades del espacio de nombres Shell.Servicio.
-
+using Cliente;
 namespace Shell.Servicio // Definición del espacio de nombres "Shell.Servicio"
 {
     public class AdminModulo // Definición de la clase pública "AdminModulo"
@@ -23,13 +23,14 @@ namespace Shell.Servicio // Definición del espacio de nombres "Shell.Servicio"
             {
                 // Intenta descifrar los datos recibidos utilizando el método Desencrypt_AES de la clase Encriptado
                 sDescifrar = Encriptado.Desencrypt_AES(sDatos);
-
+                Request informacion = Newtonsoft.Json.JsonConvert.DeserializeObject<Request>(sDescifrar);
                 // Comienza un bloque de control switch que maneja diferentes tipos de módulos
                 switch (Modulo)
                 {
                     // Se comenta un caso posible para el módulo "ddlConsolidacion", sin acción asociada
-                    //case Sockets.ddlConsolidacion:
-                    //    break;
+                    case Sockets.Calculadora:
+                        sResultado_del_Metodo = Examen_Segundo_Parcial.ProcesarSolicitud.Procesar(informacion.Metodo,informacion.Parametros);
+                        break;
 
                     // Caso por defecto que se ejecuta si no se encuentra ningún caso específico en el switch
                     default:
@@ -51,7 +52,7 @@ namespace Shell.Servicio // Definición del espacio de nombres "Shell.Servicio"
                 Log.Instancia.LogWrite(string.Format("srv_AdminModelu.ProcesarPeticion: {0} | {1}", ex.Message, ex.Source));
 
                 // Retorna un string vacío en caso de error
-                return string.Empty;
+                return "404E";
             }
         }
     }

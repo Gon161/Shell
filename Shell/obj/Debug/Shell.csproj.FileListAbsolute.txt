@@ -5,3 +5,10 @@ C:\Users\Gon\source\repos\Shell\Shell\obj\Debug\Shell.csproj.AssemblyReference.c
 C:\Users\Gon\source\repos\Shell\Shell\obj\Debug\Shell.csproj.CoreCompileInputs.cache
 C:\Users\Gon\source\repos\Shell\Shell\obj\Debug\Shell.exe
 C:\Users\Gon\source\repos\Shell\Shell\obj\Debug\Shell.pdb
+C:\Users\Less\Source\Repos\Shell\Shell\bin\Debug\Shell.exe.config
+C:\Users\Less\Source\Repos\Shell\Shell\bin\Debug\Shell.exe
+C:\Users\Less\Source\Repos\Shell\Shell\bin\Debug\Shell.pdb
+C:\Users\Less\Source\Repos\Shell\Shell\obj\Debug\Shell.csproj.AssemblyReference.cache
+C:\Users\Less\Source\Repos\Shell\Shell\obj\Debug\Shell.csproj.CoreCompileInputs.cache
+C:\Users\Less\Source\Repos\Shell\Shell\obj\Debug\Shell.exe
+C:\Users\Less\Source\Repos\Shell\Shell\obj\Debug\Shell.pdb
